@@ -1,0 +1,103 @@
+#include "global.hpp"
+
+void getptnsfromfile() {
+  origin_ptn.resize(origin_ptn_size / sizeof(rectype));
+  origin_file_stream.seekg(0);
+  origin_file_stream.read((char*)origin_ptn.data(), origin_ptn_size);
+}
+
+void getpartialptnsfromfile(int pos, int size) {
+  get_ptn.resize(size);
+  origin_file_stream.seekg(pos*sizeof(rectype));
+  origin_file_stream.read(
+      (char*)get_ptn.data(), size*sizeof(rectype));
+}
+
+void saveptnstofile() {
+  std::ofstream file(target_file, std::ios::binary|std::ios::out);
+  rectype size = target_ptn.size() * sizeof(rectype);
+  std::sort(target_ptn.begin(), target_ptn.end());
+  file.write((char*)target_ptn.data(), size);
+}
+
+void setTargetArrayToNumByCoor(
+    rectype num, std::vector<int> &coor) {
+  rectype cursor = 01ull << coor.size();
+  int *arr = target_arr.data();
+  for (auto &idx: coor) {
+    cursor >>= 1;
+    arr[idx] = 1 && (num & cursor);
+  }
+}
+
+void setOriginArrayToNumByCoor(
+    rectype num, std::vector<int> &coor) {
+  rectype cursor = 01ull << coor.size();
+  int *arr = origin_arr.data();
+  for (auto &idx: coor) {
+    cursor >>= 1;
+    arr[idx] = 1 && (num & cursor);
+  }
+}
+
+rectype getNumFromTargetArrayByCoor(
+    std::vector<int> &coor) {
+  rectype num = 0;
+  int *arr = target_arr.data();
+  for (auto &idx: coor) {
+    num <<= 1;
+    num |= arr[idx];
+  }
+  return num;
+}
+
+rectype getNumFromOriginArrayByCoor(
+    std::vector<int> &coor) {
+  rectype num = 0;
+  int *arr = origin_arr.data();
+  for (auto &idx: coor) {
+    num <<= 1;
+    num |= arr[idx];
+  }
+  return num;
+}
+
+void showOriginArrays() {
+  int size = origin_size * origin_size;
+  for (int i=0; i<size; i++) {
+    if (i%origin_size == 0 && i>0) {
+      std::cout.put('\n');
+    }
+    std::cout.put(origin_arr[i]?'1':' ');
+    std::cout.put('-');
+  }
+  std::cout << std::endl;
+}
+
+void showTargetArrays() {
+  int size = target_size * target_size;
+  for (int i=0; i<size; i++) {
+    if (i%target_size == 0 && i>0) {
+      std::cout.put('\n');
+    }
+    std::cout.put(target_arr[i]?'1':' ');
+    std::cout.put('-');
+  }
+  std::cout << std::endl;
+}
+
+rectype getOriginBottom(rectype num) {
+  return num & origin_btm_mask;
+}
+
+rectype getTargetBottom(rectype num) {
+  return num & target_btm_mask;
+}
+
+rectype getOriginTop(rectype num) {
+  return num >> origin_size;
+}
+
+rectype getTargetTop(rectype num) {
+  return num >> target_size;
+}
