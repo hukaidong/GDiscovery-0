@@ -1,5 +1,7 @@
 #include "global.hpp"
 
+#include <iomanip>
+
 
 void init_target_size(int t_size) {
   std::ostringstream s_tfile, s_ofile;
@@ -24,6 +26,7 @@ void init_target_size(int t_size) {
 void init_coors() {
   origin_left.clear();
   origin_coors.clear();
+  target_coors.clear();
   center_flip_coors.clear();
   center_trangle_coors.clear();
   bottom_origin_in_target_coors.clear();
@@ -64,6 +67,7 @@ void init_coors() {
       } else if (x!=target_size-1) {
         left_origin_in_target_coors.push_back(x*target_size+y);
       }
+      target_coors.push_back(x*target_size+y);
     }
   }
 
@@ -98,9 +102,67 @@ void init_coors() {
   target_btm_mask = (01ull << target_size) - 1;
   map_pos_offset = 16;
   map_offset_mask = (01ull << map_pos_offset) - 1;
+  lb_coner_idx = target_size * (target_size-1);
 }
 
 void reset_arr() {
   std::fill(origin_arr.begin(), origin_arr.end(), 0);
   std::fill(target_arr.begin(), target_arr.end(), 0);
+}
+
+void verify_avail_target_ptn() {
+  int cursor = lb_coner_idx;
+  rectype result;
+  while (target_arr[cursor-target_size] == 0) cursor -= target_size;
+  while (target_arr[cursor+1] == 0) cursor += 1;
+  int x = cursor % target_size;
+  int y = cursor / target_size;
+  /* Case 0: */
+  do {
+#ifdef DEBUG
+    std::cout << "========================" << std::endl;
+    std::cout << "x: " << x << ", y: " << y << std::endl;
+    showTargetArrays();
+#endif
+    if (x == y - 1) {
+      target_arr[lb_coner_idx] = 0;
+      bool iszero = 0;
+#ifdef DEBUG
+        std::cout << "following cooridinations are scaned" << std::endl;
+#endif
+      for (int xi = 0; xi <= x; xi++)
+      for (int yi = y; yi < target_size; yi++) {
+#ifdef DEBUG
+        std::cout <<
+          std::setw(6) << xi <<
+          std::setw(6) << yi <<
+          std::setw(6) << target_arr[yi*target_size + xi] <<
+          std::endl;
+#endif
+        iszero |= target_arr[yi*target_size+xi];
+      }
+      if (iszero == 0) {
+        result = getNumFromTargetArrayByCoor(target_coors);
+        target_ptn.push_back(result);
+#ifdef DEBUG
+        std::cout << "Hit on coner = 0" << std::endl;
+#endif
+      }
+    }
+  } while (0);
+  /* Case 1: */
+  do {
+#ifdef DEBUG
+    std::cout << "value_sqx: " << target_arr[lb_coner_idx+x+1] << std::endl;
+    std::cout << "value_sqy: " << target_arr[(y-1)*target_size] << std::endl;
+#endif
+    if(target_arr[lb_coner_idx+x+1] && target_arr[(y-1)*target_size]) {
+      target_arr[lb_coner_idx] = 1;
+      result = getNumFromTargetArrayByCoor(target_coors);
+      target_ptn.push_back(result);
+#ifdef DEBUG
+      std::cout << "Hit on coner = 1" << std::endl;
+#endif
+    }
+  } while (0);
 }

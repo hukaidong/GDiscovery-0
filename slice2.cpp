@@ -28,6 +28,7 @@ void getpartialptnsfromfile(int pos, int size) {
 void saveptnstofile() {
   std::ofstream file(target_file, std::ios::binary|std::ios::out);
   rectype size = target_ptn.size() * sizeof(rectype);
+  std::cout << "saving " << size << " patterns to " << target_file << std::endl;
   std::sort(target_ptn.begin(), target_ptn.end());
   file.write((char*)target_ptn.data(), size);
 }
@@ -92,7 +93,7 @@ void showTargetArrays() {
     if (i%target_size == 0 && i>0) {
       std::cout.put('\n');
     }
-    std::cout.put(target_arr[i]?'1':' ');
+    std::cout.put(target_arr[i]?'0'+target_arr[i]:' ');
     std::cout.put('-');
   }
   std::cout << std::endl << std::endl;

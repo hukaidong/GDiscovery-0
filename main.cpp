@@ -17,7 +17,8 @@ int main(int argc, const char* argv[]) {
     for (auto &b: origin_b_strides) {
       setTargetArrayToNumByCoor(l, left_origin_in_target_coors_rextra);
       setTargetArrayToNumByCoor(b, bottom_origin_in_target_coors_extra);
-      showTargetArrays();
+      verify_avail_target_ptn();
     }
   }
+  saveptnstofile();
 }
