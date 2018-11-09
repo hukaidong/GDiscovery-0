@@ -28,7 +28,7 @@ void getpartialptnsfromfile(int pos, int size) {
 void saveptnstofile() {
   std::ofstream file(target_file, std::ios::binary|std::ios::out);
   rectype size = target_ptn.size() * sizeof(rectype);
-  std::cout << "saving " << size << " patterns to " << target_file << std::endl;
+  std::cout << "saving " << target_ptn.size() << " patterns to " << target_file << std::endl;
   std::sort(target_ptn.begin(), target_ptn.end());
   file.write((char*)target_ptn.data(), size);
 }
