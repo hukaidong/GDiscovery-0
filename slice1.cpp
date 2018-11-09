@@ -43,11 +43,14 @@ void init_coors() {
   for (int x=0; x<center_size; x++)
   for (int y=0; y<center_size; y++) {
     if (x >= y) {
-      center_coors.push_back(x*origin_size+y);
-      center_flip_coors.push_back(
-          (center_size-y)*center_size-x-1);
+      center_coors.push_back(x*center_size+y);
+      center_flip_coors.push_back((center_size-y)*center_size-x-1);
     }
   }
+#ifdef DEBUG
+  std::cout << "center_coors: " << json(center_coors) << std::endl;
+  std::cout << "center_flip_coors: " << json(center_flip_coors) << std::endl;
+#endif
 
   for (int x=0; x<target_size; x++)
   for (int y=0; y<target_size; y++) {
@@ -70,11 +73,26 @@ void init_coors() {
       std::inserter(bottom_origin_in_target_coors_extra,
         bottom_origin_in_target_coors_extra.begin()));
 
+#ifdef DEBUG
+  std::cout << "bottom_origin_in_target_coors_extra: " <<
+    json(bottom_origin_in_target_coors_extra) << std::endl;
+#endif
+
   std::set_difference(
       left_origin_in_target_coors.begin(), left_origin_in_target_coors.end(),
       center_trangle_coors.begin(), center_trangle_coors.end(),
       std::inserter(left_origin_in_target_coors_extra,
         left_origin_in_target_coors_extra.begin()));
+  left_origin_in_target_coors_rextra.resize(
+      left_origin_in_target_coors_extra.size());
+  std::reverse_copy(left_origin_in_target_coors_extra.begin(),
+      left_origin_in_target_coors_extra.end(),
+      left_origin_in_target_coors_rextra.begin());
+
+#ifdef DEBUG
+  std::cout << "left_origin_in_target_coors_extra: " <<
+    json(left_origin_in_target_coors_extra) << std::endl;
+#endif
 
   origin_btm_mask = (01ull << origin_size) - 1;
   target_btm_mask = (01ull << target_size) - 1;

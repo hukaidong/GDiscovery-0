@@ -9,12 +9,16 @@
 #include <iterator>
 #include <algorithm>
 
+#include "json.hpp"
+using json = nlohmann::json;
+
 typedef u_int64_t rectype;
 
 std::vector<int>
   center_coors, center_trangle_coors, origin_coors, center_flip_coors, origin_left,
   bottom_origin_in_target_coors, bottom_origin_in_target_coors_extra,
-  left_origin_in_target_coors, left_origin_in_target_coors_extra;
+  left_origin_in_target_coors, left_origin_in_target_coors_extra,
+  left_origin_in_target_coors_rextra;
 
 int origin_size, center_size, target_size, map_pos_offset;
 std::string origin_file, target_file;

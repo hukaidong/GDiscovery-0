@@ -4,6 +4,13 @@ void getptnsfromfile() {
   origin_ptn.resize(origin_ptn_size / sizeof(rectype));
   origin_file_stream.seekg(0);
   origin_file_stream.read((char*)origin_ptn.data(), origin_ptn_size);
+  std::sort(origin_ptn.begin(), origin_ptn.end());
+#ifdef DEBUG
+  std::cout << "All patterns from file: " <<
+    origin_file << std::endl << json(origin_ptn) <<
+    std::endl;
+#endif
+
 }
 
 void getpartialptnsfromfile(int pos, int size) {
@@ -11,6 +18,11 @@ void getpartialptnsfromfile(int pos, int size) {
   origin_file_stream.seekg(pos*sizeof(rectype));
   origin_file_stream.read(
       (char*)get_ptn.data(), size*sizeof(rectype));
+#ifdef DEBUG
+  std::cout << "Get partial patterns from file: " << std::endl;
+  std::cout << "Position: " << pos << ", Size: " << size <<
+    std::endl << "Patterns: " << json(get_ptn) << std::endl;
+#endif
 }
 
 void saveptnstofile() {
@@ -83,7 +95,7 @@ void showTargetArrays() {
     std::cout.put(target_arr[i]?'1':' ');
     std::cout.put('-');
   }
-  std::cout << std::endl;
+  std::cout << std::endl << std::endl;
 }
 
 rectype getOriginBottom(rectype num) {
