@@ -45,6 +45,7 @@ void getMappedPtnsStrips(rectype num) {
   pos = temp >> map_pos_offset,
   size = temp & map_offset_mask;
   getpartialptnsfromfile(pos, size);
+  origin_b_strides.resize(size);
   std::transform(
       get_ptn.begin(), get_ptn.end(),
       origin_b_strides.begin(), getOriginBottom);
@@ -54,6 +55,7 @@ void getMappedPtnsStrips(rectype num) {
   pos = temp >> map_pos_offset,
   size = temp & map_offset_mask;
   getpartialptnsfromfile(pos, size);
+  origin_l_strides.resize(size);
   std::transform(
       get_ptn.begin(), get_ptn.end(),
       origin_l_strides.begin(), getOriginBottom);
