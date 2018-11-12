@@ -24,7 +24,7 @@ std::vector<int>
 
 int origin_size, center_size, target_size, map_pos_offset, lb_coner_idx;
 #ifdef NOSAVE
-int target_ptn_size;
+rectype target_ptn_size;
 #endif
 std::string origin_file, target_file;
 std::ifstream origin_file_stream;

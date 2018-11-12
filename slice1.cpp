@@ -154,6 +154,8 @@ void verify_avail_target_ptn() {
         result = getNumFromTargetArrayByCoor(target_coors);
 #ifdef NOSAVE
         target_ptn_size++;
+        if (!(target_ptn_size % 10000000))
+          std::cout << "." << std::flush;
 #else
         target_ptn.push_back(result);
 #endif
@@ -175,6 +177,8 @@ void verify_avail_target_ptn() {
       result = getNumFromTargetArrayByCoor(target_coors);
 #ifdef NOSAVE
       target_ptn_size++;
+      if (!(target_ptn_size % 10000000))
+        std::cout << "." << std::flush;
 #else
       target_ptn.push_back(result);
 #endif
