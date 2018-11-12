@@ -29,6 +29,7 @@ int main(int argc, const char* argv[]) {
   read.read((char*)patterns.data(), data_size);
   init_target_size(target_size);
   init_coors();
+  reset_arr();
   for (auto &ptn: patterns) {
     setTargetArrayToNumByCoor(ptn, target_coors);
     showTargetArrays();

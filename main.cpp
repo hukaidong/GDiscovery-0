@@ -10,6 +10,7 @@ int main(int argc, const char* argv[]) {
   init_coors();
   getptnsfromfile();
   generateMapFromOriginPtn();
+  reset_arr();
   for (auto &i: origin_map) {
     getMappedPtnsStrips(i.first);
     setTargetArrayToNumByCoor(i.first, center_trangle_coors);

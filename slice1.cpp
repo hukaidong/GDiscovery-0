@@ -38,14 +38,14 @@ void init_coors() {
 
   for (int x=0; x<origin_size; x++)
   for (int y=0; y<origin_size; y++) {
-    if (x >= y) {
+    if (x > y) {
       origin_coors.push_back(x*origin_size+y);
     }
   }
 
   for (int x=0; x<center_size; x++)
   for (int y=0; y<center_size; y++) {
-    if (x >= y) {
+    if (x > y) {
       center_coors.push_back(x*center_size+y);
       center_flip_coors.push_back((center_size-y)*center_size-x-1);
     }
@@ -57,7 +57,7 @@ void init_coors() {
 
   for (int x=0; x<target_size; x++)
   for (int y=0; y<target_size; y++) {
-    if (x >= y) {
+    if (x > y) {
       if (y!=0 and x!=target_size-1) {
         center_trangle_coors.push_back(x*target_size+y);
         bottom_origin_in_target_coors.push_back(x*target_size+y);
@@ -107,7 +107,13 @@ void init_coors() {
 
 void reset_arr() {
   std::fill(origin_arr.begin(), origin_arr.end(), 0);
+  for (int i=0; i<origin_size; i++) {
+    origin_arr[i*origin_size+i] = 1;
+  }
   std::fill(target_arr.begin(), target_arr.end(), 0);
+  for (int i=0; i<target_size; i++) {
+    target_arr[i*target_size+i] = 1;
+  }
 }
 
 void verify_avail_target_ptn() {
