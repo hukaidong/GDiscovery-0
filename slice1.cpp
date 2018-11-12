@@ -21,6 +21,9 @@ void init_target_size(int t_size) {
   origin_file_stream.open(
       origin_file, std::ios::in|std::ios::binary|std::ios::ate);
   origin_ptn_size = origin_file_stream.tellg();
+#ifdef NOSAVE
+  target_ptn_size = 0;
+#endif
 }
 
 void init_coors() {
@@ -149,7 +152,12 @@ void verify_avail_target_ptn() {
       }
       if (iszero == 0) {
         result = getNumFromTargetArrayByCoor(target_coors);
+#ifdef NOSAVE
+        target_ptn_size++;
+#else
         target_ptn.push_back(result);
+#endif
+
 #ifdef DEBUG
         std::cout << "Hit on coner = 0" << std::endl;
 #endif
@@ -165,7 +173,12 @@ void verify_avail_target_ptn() {
     if(target_arr[lb_coner_idx+x+1] && target_arr[(y-1)*target_size]) {
       target_arr[lb_coner_idx] = 1;
       result = getNumFromTargetArrayByCoor(target_coors);
+#ifdef NOSAVE
+      target_ptn_size++;
+#else
       target_ptn.push_back(result);
+#endif
+
 #ifdef DEBUG
       std::cout << "Hit on coner = 1" << std::endl;
 #endif

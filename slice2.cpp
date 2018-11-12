@@ -26,13 +26,15 @@ void getpartialptnsfromfile(int pos, int size) {
 }
 
 void saveptnstofile() {
+#ifdef NOSAVE
+  std::cout << "saving " << target_ptn_size << " patterns to " << target_file << std::endl;
+#else
   std::ofstream file(target_file, std::ios::binary|std::ios::out);
   rectype size = target_ptn.size() * sizeof(rectype);
   std::cout << "saving " << target_ptn.size() << " patterns to " << target_file << std::endl;
-  if (target_size < 12) {
-    std::sort(target_ptn.begin(), target_ptn.end());
-    file.write((char*)target_ptn.data(), size);
-  }
+  std::sort(target_ptn.begin(), target_ptn.end());
+  file.write((char*)target_ptn.data(), size);
+#endif
 }
 
 void setTargetArrayToNumByCoor(

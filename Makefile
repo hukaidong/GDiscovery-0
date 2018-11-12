@@ -1,6 +1,7 @@
 .PHONY: all
 all:
 	-g++ main.cpp --std=c++11 -O3 -o bin/main
+	-g++ main.cpp --std=c++11 -O3 -DNOSAVE -o bin/main-nosave
 	-g++ ptnsort.cpp --std=c++11 -O3 -o bin/sort
 	-g++ ptnshow.cpp --std=c++11 -O3 -o bin/show
 
