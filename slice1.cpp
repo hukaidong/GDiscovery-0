@@ -119,7 +119,18 @@ void reset_arr() {
   }
 }
 
-void verify_avail_target_ptn() {
+void show_at_index_handler() {
+  if (show_at_index_enabled) {
+    if (show_at_index != 0) {
+      show_at_index --;
+    } else {
+      showTargetArrays();
+      show_at_index_enabled = false;
+    }
+  }
+}
+
+void verify_avail_target_ptn(bool index_guided=false) {
   int cursor = lb_coner_idx;
   rectype result;
   while (target_arr[cursor-target_size] == 0) cursor -= target_size;
@@ -152,6 +163,7 @@ void verify_avail_target_ptn() {
       }
       if (iszero == 0) {
         result = getNumFromTargetArrayByCoor(target_coors);
+        show_at_index_handler();
 #ifdef NOSAVE
         target_ptn_size++;
         if (!(target_ptn_size % 10000000))
@@ -175,6 +187,7 @@ void verify_avail_target_ptn() {
     if(target_arr[lb_coner_idx+x+1] && target_arr[(y-1)*target_size]) {
       target_arr[lb_coner_idx] = 1;
       result = getNumFromTargetArrayByCoor(target_coors);
+      show_at_index_handler();
 #ifdef NOSAVE
       target_ptn_size++;
       if (!(target_ptn_size % 10000000))

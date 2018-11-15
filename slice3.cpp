@@ -2,8 +2,9 @@
 
 #include <iomanip>
 
-void generateMapFromOriginPtn() {
+void generateMapFromOriginPtn(bool save_cent_ptn=false) {
   origin_map.clear();
+  center_ptn.clear();
   rectype index = 0, temp,
           current_num,
           current_start = 0;
@@ -22,6 +23,9 @@ void generateMapFromOriginPtn() {
       temp = (index - current_start)
         | current_start << map_pos_offset;
       origin_map.insert({current_num, temp});
+      if (save_cent_ptn) {
+        center_ptn.push_back(current_num);
+      }
       current_num = getOriginTop(num);
       current_start = index;
     }
@@ -36,6 +40,9 @@ void generateMapFromOriginPtn() {
   temp = (index - current_start)
     | current_start << map_pos_offset;
   origin_map.insert({current_num, temp});
+  if (save_cent_ptn) {
+    center_ptn.push_back(current_num);
+  }
 
 }
 

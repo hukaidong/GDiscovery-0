@@ -2,8 +2,6 @@
 #include "slice2.cpp"
 #include "slice3.cpp"
 
-
-
 int main(int argc, const char* argv[]) {
   if (argc != 2) { std::cerr << "Unsupported arguments" << std::endl; exit(1);}
   init_target_size(std::stoi(argv[1]));

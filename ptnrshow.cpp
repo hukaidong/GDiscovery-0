@@ -3,6 +3,8 @@
 #include "slice2.cpp"
 #include "slice3.cpp"
 
+#include <cstdlib>
+#include <ctime>
 #include <vector>
 #include <string>
 #include <fstream>
@@ -10,6 +12,7 @@
 
 int main(int argc, const char* argv[]) {
   rectype data_size, ptn_size, target_size;
+  std::srand(std::time(0));
   std::string ifname;
   std::vector<rectype> patterns;
 
@@ -29,8 +32,11 @@ int main(int argc, const char* argv[]) {
   init_target_size(target_size);
   init_coors();
   reset_arr();
-  for (auto &ptn: patterns) {
-    setTargetArrayToNumByCoor(ptn, target_coors);
-    showTargetArrays();
-  }
+  int rnd_idx = patterns.size() * std::rand() / RAND_MAX;
+  std::cout << "Size of pattern: " << patterns.size() << std::endl;
+  std::cout << "Random index: " << rnd_idx << std::endl;
+
+  rectype ptn = patterns.at(rnd_idx);
+  setTargetArrayToNumByCoor(ptn, target_coors);
+  showTargetArrays();
 }

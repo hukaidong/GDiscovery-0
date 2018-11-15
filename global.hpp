@@ -30,14 +30,14 @@ std::string origin_file, target_file;
 std::ifstream origin_file_stream;
 std::ofstream target_file_stream;
 
-std::vector<rectype> origin_ptn, target_ptn,
-  origin_l_strides, origin_b_strides,
-  get_ptn;
+std::vector<rectype> origin_ptn, target_ptn, center_ptn,
+  origin_l_strides, origin_b_strides, get_ptn;
 std::vector<int> origin_arr, target_arr;
 std::map<rectype, rectype> origin_map;
 
+bool show_at_index_enabled = false;
 rectype origin_btm_mask, target_btm_mask, map_offset_mask,
-        origin_ptn_size;
+        origin_ptn_size, show_at_index;
 
 rectype getOriginTop(rectype);
 rectype getOriginBottom(rectype);
